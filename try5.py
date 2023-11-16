@@ -81,7 +81,8 @@ def worker(queue):
         queue.task_done()
 
 # Send function with threading and Gorgon
-def send_requests(device_id, install_id, cdid, openudid, __aweme_id, session, proxies, proxy_format, domains, versions, layout, task_    global reqs, _lock, success, fails, rps, rpm
+def send_requests(device_id, install_id, cdid, openudid, __aweme_id, session, proxies, proxy_format, domains, versions, layout, task_    
+    global reqs, _lock, success, fails, rps, rpm
     for x in range(10):
         try:
             version = random.choice(__versions)
