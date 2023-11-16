@@ -183,20 +183,20 @@ def fetch_proxies():
 # Main execution
 if __name__ == "__main__":
     # Load devices, proxies, and config
-   with open('devices.txt', 'r') as f:
-     devices = f.read().splitlines()
+    with open('devices.txt', 'r') as f:
+        devices = f.read().splitlines()
 
-   with open('config.json', 'r') as f:
-     config = json.load(f)
-   if config["proxy"]['proxyscrape']:
-     fetch_proxies()
-   proxy_format = f'{config["proxy"]["proxy-type"].lower()}://{config["proxy"]["credential"]+"@" if config["proxy"]["auth"] else ""}' if config['proxy']['use-proxy'] else ''
-   if config['proxy']['use-proxy']:
-      with open('proxies.txt', 'r') as f:
-        proxies = f.read().splitlines()
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+    if config["proxy"]['proxyscrape']:
+        fetch_proxies()
+    proxy_format = f'{config["proxy"]["proxy-type"].lower()}://{config["proxy"]["credential"]+"@" if config["proxy"]["auth"] else ""}' if config['proxy']['use-proxy'] else ''
+    if config['proxy']['use-proxy']:
+        with open('proxies.txt', 'r') as f:
+            proxies = f.read().splitlines()
             
-   os.system("cls" if os.name == "nt" else "clear")
-   print(r"""
+    os.system("cls" if os.name == "nt" else "clear")
+    print(r"""
                                          do. 
                                         :NOX 
                                        ,NOM@: 
