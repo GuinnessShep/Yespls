@@ -262,4 +262,5 @@ if __name__ == "__main__":
     while True:
         device = random.choice(__devices).split(':')
         if threading.active_count() < thread_count:
-        threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
+            did, iid, cdid, openudid = device.split(':')
+            threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
