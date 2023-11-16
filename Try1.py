@@ -194,8 +194,7 @@ if __name__ == "__main__":
         with open('proxies.txt', 'r') as f:
             proxies = f.read().splitlines()
     os.system("cls" if os.name == "nt" else "clear")
-    set_title("N.H.K TOOL")
-    txt = r"""
+    set_title(r"""
                                          do.                                           
                                         :NOX 
                                        ,NOM@: 
@@ -248,7 +247,7 @@ if __name__ == "__main__":
       YM@'         :OOMN: :OOOO@MMNOXM'
       `:P           :oP''  "'OOM@NXNM' 
        `'                    GUINNESS' 
-                               '"'  """
+                               '"'  """)
     print(
         Colorate.Vertical(
             Colors.DynamicMIX((Col.light_blue, Col.purple)), Center.XCenter(txt)
