@@ -259,8 +259,16 @@ if __name__ == "__main__":
 
     threading.Thread(target=rpsm_loop).start()
 
-    while True:
-        device = random.choice(devices)  # Ensures 'device' gets a string value
-        if threading.active_count() < thread_count:
-            did, iid, cdid, openudid = device.split(':')  # Now 'device.split' should work correctly
-            threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
+while True:
+    device = random.choice(devices)
+    parts = device.split(':')
+    
+    # Check if the split parts are exactly four
+    if len(parts) != 4:
+        print(f"Skipping device with incorrect format: {device}")
+        continue  # Skip to the next iteration if the format is incorrect
+
+    did, iid, cdid, openudid = parts  # Unpack the values
+
+    if threading.active_count() < thread_count:
+        threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
