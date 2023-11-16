@@ -30,6 +30,14 @@ class BlockCookies(cookiejar.CookiePolicy):
 r = requests.Session()
 r.cookies.set_policy(BlockCookies())
 
+__domains = ["api22-core-c-useast1a.tiktokv.com", "api19-core-c-useast1a.tiktokv.com", 
+             "api16-core-c-useast1a.tiktokv.com", "api21-core-c-useast1a.tiktokv.com"]
+__devices = ["SM-G9900", "SM-A136U1", "SM-M225FV", "SM-E426B", "SM-M526BR", "SM-M326B", 
+             "SM-A528B", "SM-F711B", "SM-F926B", "SM-A037G", "SM-A225F", "SM-M325FV", 
+             "SM-A226B", "SM-M426B", "SM-A525F", "SM-N976N"]
+__versions = ["190303", "190205", "190204", "190103", "180904", "180804", 
+              "180803", "180802", "270204"]
+
 # Gorgon class
 class Gorgon:
     def __init__(self, params: str, data: str = None, cookies: str = None, unix: int = None):
@@ -176,22 +184,16 @@ def fetch_proxies():
 if __name__ == "__main__":
     # Load devices, proxies, and config
     with open('devices.txt', 'r') as f:
-        __devices = f.read().splitlines()
-    with open('proxies.txt', 'r') as f:
-        proxies = f.read().splitlines()
+        devices = f.read().splitlines()
     with open('config.json', 'r') as f:
         config = json.load(f)
-
-    __domains = ["api22-core-c-useast1a.tiktokv.com", "api19-core-c-useast1a.tiktokv.com", 
-             "api16-core-c-useast1a.tiktokv.com", "api21-core-c-useast1a.tiktokv.com"]
-    __devices = ["SM-G9900", "SM-A136U1", "SM-M225FV", "SM-E426B", "SM-M526BR", "SM-M326B", 
-             "SM-A528B", "SM-F711B", "SM-F926B", "SM-A037G", "SM-A225F", "SM-M325FV", 
-             "SM-A226B", "SM-M426B", "SM-A525F", "SM-N976N"]
-    __versions = ["190303", "190205", "190204", "190103", "180904", "180804", 
-              "180803", "180802", "270204"]
-
+    if config["proxy"]['proxyscrape']:
+        fetch_proxies()
     proxy_format = f'{config["proxy"]["proxy-type"].lower()}://{config["proxy"]["credential"]+"@" if config["proxy"]["auth"] else ""}' if config['proxy']['use-proxy'] else ''
-
+    if config['proxy']['use-proxy']:
+        with open('proxies.txt', 'r') as f:
+            proxies = f.read().splitlines()
+            
     os.system("cls" if os.name == "nt" else "clear")
     print(r"""
                                          do. 
@@ -260,4 +262,4 @@ if __name__ == "__main__":
     while True:
         device = random.choice(__devices).split(':')
         if threading.active_count() < thread_count:
-            threading.Thread(target=send, args=device).start()
+        threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
