@@ -259,12 +259,13 @@ if __name__ == "__main__":
         sys.exit(1)
 
     threading.Thread(target=rpsm_loop).start()    
-        while True:
-                device = random.choice(devices)
+      while True:
+          device = random.choice(devices)
 
-               if threading.active_count() < thread_count: 
-                    did, iid, cdid, openudid = device.split(':')
-                    threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
+          if threading.active_count() < thread_count:
+              did, iid, cdid, openudid = device.split(':')
+              threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
+
 #  #  threading.Thread(target=rpsm_loop).start()
 # ##     while True:
 #          device = random.choice(devices)
