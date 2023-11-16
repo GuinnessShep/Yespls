@@ -248,7 +248,7 @@ if __name__ == "__main__":
       YM@'         :OOMN: :OOOO@MMNOXM'
       `:P           :oP''  "'OOM@NXNM' 
        `'                    GUINNESS' 
-                               '"'  """)
+                               '"'  """) 
 
     try:
         link = str(Write.Input("Enter TikTok URL: ", Colors.white_to_green, interval=0.0001))
