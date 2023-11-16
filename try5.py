@@ -81,38 +81,76 @@ def worker(queue):
         queue.task_done()
 
 # Send function with threading and Gorgon
-def send_requests(device_id, install_id, cdid, openudid, __aweme_id, session, proxies, proxy_format, domains, versions, layout, task_id):
-    for _ in range(100):
+def send_requests(device_id, install_id, cdid, openudid, __aweme_id, session, proxies, proxy_format, domains, versions, layout, task_    global reqs, _lock, success, fails, rps, rpm
+    for x in range(10):
         try:
-            version = random.choice(versions)
+            version = random.choice(__versions)
             params = urlencode(
-                {
-                    "device_type": random.choice(devices),
-                    "version_code": version,
-                    "device_id": device_id,
-                    "iid": install_id
-                }
-            )
+                                {
+                                    "os_api": "25",
+                                    "device_type": random.choice(__devices),
+                                    "ssmix": "a",
+                                    "manifest_version_code": version,
+                                    "dpi": "240",
+                                    "region": "VN",
+                                    "carrier_region": "VN",
+                                    "app_name": "musically_go",
+                                    "version_name": "27.2.4",
+                                    "timezone_offset": "-28800",
+                                    "ab_version": "27.2.4",
+                                    "ac2": "wifi",
+                                    "ac": "wifi",
+                                    "app_type": "normal",
+                                    "channel": "googleplay",
+                                    "update_version_code": version,
+                                    "device_platform": "android",
+                                    "iid": __install_id,
+                                    "build_number": "27.2.4",
+                                    "locale": "vi",
+                                    "op_region": "VN",
+                                    "version_code": version,
+                                    "timezone_name": "Asia/Ho_Chi_Minh",
+                                    "device_id": __device_id,
+                                    "sys_region": "VN",
+                                    "app_language": "vi",
+                                    "resolution": "720*1280",
+                                    "device_brand": "samsung",
+                                    "language": "vi",
+                                    "os_version": "7.1.2",
+                                    "aid": "1340"
+                                }
+        )
             payload = f"item_id={__aweme_id}&play_delta=1"
-            sig = Gorgon(params=params, data=None, cookies=None, unix=int(time.time())).get_value()
+            sig     = Gorgon(params=params, cookies=None, data=None, unix=int(time.time())).get_value()
 
-            proxy = random.choice(proxies) if proxies else ""
+            proxy = random.choice(proxies) if config['proxy']['use-proxy'] else ""
 
-            response = session.post(
-                url="https://" + random.choice(domains) + "/aweme/v1/aweme/stats/?" + params,
-                data=payload,
-                headers={'x-gorgon': sig['X-Gorgon'], 'x-khronos': sig['X-Khronos']},
-                proxies={"http": proxy_format + proxy, "https": proxy_format + proxy} if proxies else {}
+            response = r.post(
+                url = (
+                    "https://"
+                    +  random.choice(__domains)  +
+                    "/aweme/v1/aweme/stats/?" + params
+                ),
+                data    = payload,
+                headers = {'cookie':'sessionid=90c38a59d8076ea0fbc01c8643efbe47','x-gorgon':sig['X-Gorgon'],'x-khronos':sig['X-Khronos'],'user-agent':'okhttp/3.10.0.1'},
+                verify  = False,
+                proxies = {"http": proxy_format+proxy, "https": proxy_format+proxy} if config['proxy']['use-proxy'] else {}
             )
-
-            if response.json().get('status_code') == 0:
-                layout["status"].update(Panel(f"[green]Thread {task_id}: Request Successful", title="Status"))
-            else:
-                layout["status"].update(Panel(f"[red]Thread {task_id}: Request Failed", title="Status"))
+            reqs += 1
+            try:
+                if response.json()['status_code'] == 0:
+                    _lock.acquire()
+                    print(Colorate.Horizontal(Colors.red_to_green, f'TikTok Viewbot by N.H.K TOOL^| success: {success} fails: {fails} reqs: {reqs} rps: {rps} rpm: {rpm}'))
+                    success += 1
+                    _lock.release()
+            except:
+                if _lock.locked():_lock.release()
+                fails += 1
+                continue
 
         except Exception as e:
-            layout["status"].update(Panel(f"[red]Thread {task_id}: Error {str(e)}", title="Status"))
-        time.sleep(0.1)
+            pass
+
 
 # Fetch Proxies
 def fetch_proxies():
