@@ -81,28 +81,38 @@ def worker(queue):
         queue.task_done()
 
 # Send function with threading and Gorgon
-def send(__device_id, __install_id, cdid, openudid):
-    global success, fails
-    for _ in range(10):
+def send_requests(device_id, install_id, cdid, openudid, __aweme_id, session, proxies, proxy_format, domains, versions, layout, task_id):
+    for _ in range(100):
         try:
-            version = random.choice(__versions)
-            params = urlencode({"device_type": random.choice(__devices), "version_code": version, "aid": "1340", ...})
-            payload = f"item_id={__aweme_id}&play_delta=1"
-            sig = Gorgon(params=params, cookies=None, data=None, unix=int(time.time())).get_value()
-            proxy = random.choice(proxies) if config['proxy']['use-proxy'] else ""
-            response = r.post(
-                url=f"https://{random.choice(__domains)}/aweme/v1/aweme/stats/?{params}",
-                data=payload,
-                headers={'cookie': 'sessionid=...', 'x-gorgon': sig['X-Gorgon'], 'x-khronos': sig['X-Khronos'], ...},
-                verify=False,
-                proxies={"http": proxy, "https": proxy} if config['proxy']['use-proxy'] else {}
+            version = random.choice(versions)
+            params = urlencode(
+                {
+                    "device_type": random.choice(devices),
+                    "version_code": version,
+                    "device_id": device_id,
+                    "iid": install_id
+                }
             )
+            payload = f"item_id={__aweme_id}&play_delta=1"
+            sig = Gorgon(params=params, data=None, cookies=None, unix=int(time.time())).get_value()
+
+            proxy = random.choice(proxies) if proxies else ""
+
+            response = session.post(
+                url="https://" + random.choice(domains) + "/aweme/v1/aweme/stats/?" + params,
+                data=payload,
+                headers={'x-gorgon': sig['X-Gorgon'], 'x-khronos': sig['X-Khronos']},
+                proxies={"http": proxy_format + proxy, "https": proxy_format + proxy} if proxies else {}
+            )
+
             if response.json().get('status_code') == 0:
-                success += 1
+                layout["status"].update(Panel(f"[green]Thread {task_id}: Request Successful", title="Status"))
             else:
-                fails += 1
-        except Exception:
-            fails += 1
+                layout["status"].update(Panel(f"[red]Thread {task_id}: Request Failed", title="Status"))
+
+        except Exception as e:
+            layout["status"].update(Panel(f"[red]Thread {task_id}: Error {str(e)}", title="Status"))
+        time.sleep(0.1)
 
 # Fetch Proxies
 def fetch_proxies():
