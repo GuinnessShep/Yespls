@@ -260,7 +260,7 @@ if __name__ == "__main__":
     threading.Thread(target=rpsm_loop).start()
 
     while True:
-        device = random.choice(devices)
+        device = random.choice(devices)  # Ensures 'device' gets a string value
         if threading.active_count() < thread_count:
-            did, iid, cdid, openudid = device.split(':')
+            did, iid, cdid, openudid = device.split(':')  # Now 'device.split' should work correctly
             threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
