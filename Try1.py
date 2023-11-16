@@ -82,10 +82,37 @@ def send(did, iid, cdid, openudid):
             version = random.choice(__versions)
             params = urlencode(
                 {
-                    "device_id": did,
-                    "iid": iid,
+                    "os_api": "25",
                     "device_type": random.choice(__devices),
-                    # ... additional parameters
+                    "ssmix": "a",
+                    "manifest_version_code": version,
+                    "dpi": "240",
+                    "region": "VN",
+                    "carrier_region": "VN",
+                    "app_name": "musically_go",
+                    "version_name": "27.2.4",
+                    "timezone_offset": "-28800",
+                    "ab_version": "27.2.4",
+                    "ac2": "wifi",
+                    "ac": "wifi",
+                    "app_type": "normal",
+                    "channel": "googleplay",
+                    "update_version_code": version,
+                    "device_platform": "android",
+                    "iid": __install_id,
+                    "build_number": "27.2.4",
+                    "locale": "vi",
+                    "op_region": "VN",
+                    "version_code": version,
+                    "timezone_name": "Asia/Ho_Chi_Minh",
+                    "device_id": __device_id,
+                    "sys_region": "VN",
+                    "app_language": "vi",
+                    "resolution": "720*1280",
+                    "device_brand": "samsung",
+                    "language": "vi",
+                    "os_version": "7.1.2",
+                    "aid": "1340"
                 }
             )
             payload = f"item_id={__aweme_id}&play_delta=1"
@@ -144,7 +171,7 @@ if __name__ == "__main__":
     __versions = ["190303", "190205", "190204", "190103", "180904", "180804", 
               "180803", "180802", "270204"]
 
-    proxy_format = f"{config['proxy']['proxy-type'].lower()}://"
+    proxy_format = f'{config["proxy"]["proxy-type"].lower()}://{config["proxy"]["credential"]+"@" if config["proxy"]["auth"] else ""}' if config['proxy']['use-proxy'] else ''
 
     os.system("cls" if os.name == "nt" else "clear")
     print(r"""
