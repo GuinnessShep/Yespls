@@ -179,7 +179,7 @@ def fetch_proxies():
                 f.close()
         else:
             pass
-            
+
 # Main execution
 if __name__ == "__main__":
     # Load devices, proxies, and config
@@ -197,7 +197,7 @@ if __name__ == "__main__":
             
     os.system("cls" if os.name == "nt" else "clear")
     print(r"""
-                                         do. 
+                                         do.                                          do. 
                                         :NOX 
                                        ,NOM@: 
                                        :NNNN: 
@@ -260,19 +260,16 @@ if __name__ == "__main__":
 
     threading.Thread(target=rpsm_loop).start()
 
-# Load devices, proxies, and config from the working script
-
-
-while True:
-    device = random.choice(devices)
-    parts = device.split(':')
+    while True:
+        device = random.choice(devices)
+        parts = device.split(':')
    
-    # Check if the split parts are exactly four
-    if len(parts) != 4:
-        print(f"Skipping device with incorrect format: {device}")
-        continue  # Skip to the next iteration if the format is incorrect
+        # Check if the split parts are exactly four
+        if len(parts) != 4:
+            print(f"Skipping device with incorrect format: {device}")
+            continue  # Skip to the next iteration if the format is incorrect
 
-    did, iid, cdid, openudid = parts  # Unpack the values
+        did, iid, cdid, openudid = parts  # Unpack the values
 
-    if threading.active_count() < thread_count:
-        threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
+        if threading.active_count() < thread_count:
+            threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
