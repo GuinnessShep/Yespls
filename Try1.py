@@ -182,10 +182,9 @@ def fetch_proxies():
 
 # Main execution
 if __name__ == "__main__":
-    # Load devices, proxies, and config
     with open('devices.txt', 'r') as f:
         devices = f.read().splitlines()
-
+    
     with open('config.json', 'r') as f:
         config = json.load(f)
     if config["proxy"]['proxyscrape']:
@@ -194,10 +193,10 @@ if __name__ == "__main__":
     if config['proxy']['use-proxy']:
         with open('proxies.txt', 'r') as f:
             proxies = f.read().splitlines()
-            
     os.system("cls" if os.name == "nt" else "clear")
-    print(r"""
-                                         do.                                          do. 
+    set_title("N.H.K TOOL")
+    txt = r"""
+                                         do.                                           
                                         :NOX 
                                        ,NOM@: 
                                        :NNNN: 
@@ -249,34 +248,44 @@ if __name__ == "__main__":
       YM@'         :OOMN: :OOOO@MMNOXM'
       `:P           :oP''  "'OOM@NXNM' 
        `'                    GUINNESS' 
-                               '"'  """) 
-
+                               '"'  """
+    print(
+        Colorate.Vertical(
+            Colors.DynamicMIX((Col.light_blue, Col.purple)), Center.XCenter(txt)
+        )
+    )
+    
     try:
-        link = str(Write.Input("Enter TikTok URL: ", Colors.white_to_green, interval=0.0001))
-        thread_count = int(input("Enter the number of threads you'd like to run: "))
-    except Exception as e:
-        print(f"Error: {e}")
-        sys.exit(1)
-
-    threading.Thread(target=rpsm_loop).start()    
+        link = str(Write.Input("\n\n      ? - Paste Video Link > ", Colors.white_to_green, interval=0.0001))
+        __aweme_id = str(
+            re.findall(r"(\d{18,19})", link)[0]
+            if len(re.findall(r"(\d{18,19})", link)) == 1
+            else re.findall(
+                r"(\d{18,19})",
+                requests.head(link, allow_redirects=True, timeout=5).url
+            )[0]
+        )
+    except:
+        os.system("cls" if os.name == "nt" else "clear")
+        input(Col.red + "x - Invalid link, try inputting video id only" + Col.reset)
+        sys.exit(0)
+    
+    os.system("cls" if os.name == "nt" else "clear")
+    print("🔥🏃 Wait loading....")
+    
+    _lock = threading.Lock()
+    reqs = 0
+    success = 0
+    fails = 0
+    rpm = 0
+    rps = 0
+    
+    threading.Thread(target=rpsm_loop).start()
+    
+    
     while True:
         device = random.choice(devices)
-
+    
         if threading.active_count() < thread_count:
             did, iid, cdid, openudid = device.split(':')
             threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
-
-#  #  threading.Thread(target=rpsm_loop).start()
-# ##     while True:
-#          device = random.choice(devices)
-#          parts = device.split(':')
-# #  
-#        # Check if the split parts are exactly four
-#          if len(parts) != 4:
-#              print(f"Skipping device with incorrect format: {device}")
-#              continue  # Skip to the next iteration if the format is incorrect
-#
-#          did, iid, cdid, openudid = parts  # Unpack the values
-#
-#          if threading.active_count() < thread_count:
-#              threading.Thread(target=send, args=[did, iid, cdid, openudid]).start()
