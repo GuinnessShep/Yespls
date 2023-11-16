@@ -184,8 +184,8 @@ if __name__ == "__main__":
             proxies = f.read().splitlines()
     
     os.system("cls" if os.name == "nt" else "clear")
+    set_title(r"""
 
-    txt = r"""
                              do.
                             :NOX
                            ,NOM@:
@@ -227,7 +227,7 @@ if __name__ == "__main__":
  ;O':OOXNXOOXX:   :;NMO:":NMMMXOOX@MN@@@@b.:M@@@M@@@MMM@
  :: ;"OOOOOO@N;:  'ON@MO.'":""OOOO@@NNMN@@@. Y@@@MMM@@@@b
  :;   ':O:oX@@O;;  ;O@@XO'   "oOOOOXMMNMNNN@MN""YMNMMM@@MMo.
- :N:.   ''oOM@NMo.::OX@NOOo.  ;OOOXXNNNMMMNXNM@bd@MNNMMM@MM@bb   Made By @GUINNESSGSHEP
+ :N:.   ''oOM@NMo.::OX@NOOo.  ;OOOXXNNNMMMNXNM@bd@MNNMMM@MM@bb   Made By GUINNESS SHEPHERD
   @;O .  ,OOO@@@MX;;ON@NOOO.. ' ':OXN@NNN@@@@@M@@@@MNXNMM@MMM@,
   M@O;;  :O:OX@@M@NXXOM@NOO:;;:,;;ON@NNNMM'`"@@M@@@@@MXNMMMMM@N
   N@NOO;:oO;O:NMMM@M@OO@NOO;O;oOOXN@NNM@@'   `Y@NM@@@@MMNNMM@MM
@@ -238,8 +238,8 @@ if __name__ == "__main__":
       `:P           :oP''  "'OOM@NXNM'
        `'                    GUINNESS'
                                '-"-' 
-                                '-  """
-
+                                '-  """)
+    txt = """ TikTok @guinnessgshep - Twitter @caffineshep """
     print(
         Colorate.Vertical(
             Colors.DynamicMIX((Col.light_blue, Col.purple)), Center.XCenter(txt)
