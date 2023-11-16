@@ -192,7 +192,7 @@ def send(__device_id, __install_id, cdid, openudid):
             try:
                 if response.json()['status_code'] == 0:
                     _lock.acquire()
-                    print(f'{e621}[{blfc}🔥 Guinness Shepherd 🔥{e621}] {e621}[{yiff}BUFF VIEW SUCCESS{e621}] {e621}{huff}+: furry{success}{e621} View')
+                    print(f'{e621}[{blfc}🔥 Guinness Shepherd 🔥{e621}] {e621}[{yiff}BUFF VIEW SUCCESS{e621}] {e621}{huff}+: {furry}{success}{e621} View')
                     success += 1
                     _lock.release()
             except:
@@ -247,8 +247,8 @@ if __name__ == "__main__":
     os.system("cls" if os.name == "nt" else "clear")
     print(banner)
     try:
-        link = input(f'{e621}[furry{shep}{e621}] {yiff}ENTER A TIKTOK VIDEO URL HERE: furry')
-        print(f'furry- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -')
+        link = input(f'{e621}[{furry}{shep}{e621}] {yiff}ENTER A TIKTOK VIDEO URL HERE: {furry}')
+        print(f'{furry}- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -')
         __aweme_id = str(
             re.findall(r"(\d{18,19})", link)[0]
             if len(re.findall(r"(\d{18,19})", link)) == 1
@@ -258,7 +258,7 @@ if __name__ == "__main__":
             )[0]
         )
     except:
-        exit(f"{e621}[furry{shep}{e621}] {e621}INVALID LINK")
+        exit(f"{e621}[{furry}{shep}{e621}] {e621}INVALID LINK")
     
     _lock = threading.Lock()
     reqs = 0
@@ -276,4 +276,3 @@ if __name__ == "__main__":
         if eval(base64.b64decode("dGhyZWFkaW5nLmFjdGl2ZV9jb3VudCgpIDwgMTAwICMgZG9uJ3QgY2hhbmdlIGNvdW50IG9yIHUgd2lsbCBraWxsIGRldmljZXMgYW5kIHJ1aW4gZnVuIGZvciBvdGhlcnM=")):
             did, iid, cdid, openudid = device.split(':')
             eval(base64.b64decode('dGhyZWFkaW5nLlRocmVhZCh0YXJnZXQ9c2VuZCxhcmdzPVtkaWQsaWlkLGNkaWQsb3BlbnVkaWRdKS5zdGFydCgp'))
-            
