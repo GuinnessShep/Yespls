@@ -153,6 +153,25 @@ def rpsm_loop():
         rps = round((reqs - initial) / 1.5, 1)
         rpm = round(rps * 60, 1)
 
+def fetch_proxies():
+    url_list =[
+        "https://raw.githubusercontent.com/yemixzy/proxy-list/main/proxy-list/data.txt",
+        "https://raw.githubusercontent.com/UptimerBot/proxy-list/main/proxies/http.txt",
+        "https://raw.githubusercontent.com/rdavydov/proxy-list/main/proxies/http.txt",
+        "https://raw.githubusercontent.com/rdavydov/proxy-list/main/proxies/socks4.txt",
+        "https://raw.githubusercontent.com/rdavydov/proxy-list/main/proxies/socks5.txt"        
+    ]
+    for url in url_list :
+        response = requests.get(
+            url=url
+        )
+        if response.ok:
+            with open("proxies.txt", "a+") as f:
+                f.write(response.text)
+                f.close()
+        else:
+            pass
+            
 # Main execution
 if __name__ == "__main__":
     # Load devices, proxies, and config
